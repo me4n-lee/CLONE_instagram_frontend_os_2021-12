@@ -34,11 +34,11 @@ export const logUserOut = async () => {
 };
 
 const uploadHttpLink = createUploadLink({
-  uri: "https://modern-otter-100.loca.lt/graphql",
+  uri: "http://neat-chicken-29.loca.lt/graphql",
 });
 
 const wsLink = new WebSocketLink({
-  uri: "ws://modern-otter-100.loca.lt/graphql",
+  uri: "ws://neat-chicken-29.loca.lt/graphql",
   options: {
     connectionParams: () => ({
       token: tokenVar(),

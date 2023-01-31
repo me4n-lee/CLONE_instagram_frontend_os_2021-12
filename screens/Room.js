@@ -13,7 +13,6 @@ import { useForm } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
 import useMe from "../hooks/useMe";
 
-
 const ROOM_UPDATES = gql`
   subscription roomUpdates($id: Int!) {
     roomUpdates(id: $id) {
@@ -59,15 +58,12 @@ const MessageContainer = styled.View`
   flex-direction: ${(props) => (props.outGoing ? "row-reverse" : "row")};
   align-items: flex-end;
 `;
-
 const Author = styled.View``;
-
 const Avatar = styled.Image`
   height: 20px;
   width: 20px;
   border-radius: 25px;
 `;
-
 const Message = styled.Text`
   color: white;
   background-color: rgba(255, 255, 255, 0.3);
@@ -77,7 +73,6 @@ const Message = styled.Text`
   font-size: 16px;
   margin: 0px 10px;
 `;
-
 const TextInput = styled.TextInput`
   border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 10px 20px;
@@ -97,9 +92,7 @@ const InputContainer = styled.View`
 
 const SendButton = styled.TouchableOpacity``;
 
-
 export default function Room({ route, navigation }) {
-
   const { data: meData } = useMe();
   const { register, setValue, handleSubmit, getValues, watch } = useForm();
   const updateSendMessage = (cache, result) => {
@@ -151,7 +144,6 @@ export default function Room({ route, navigation }) {
       update: updateSendMessage,
     }
   );
-
   const { data, loading, subscribeToMore } = useQuery(ROOM_QUERY, {
     variables: {
       id: route?.params?.id,
@@ -165,7 +157,7 @@ export default function Room({ route, navigation }) {
       },
     } = options;
     if (message.id) {
-        const incomingMessage = client.cache.writeFragment({
+      const incomingMessage = client.cache.writeFragment({
         fragment: gql`
           fragment NewMessage on Message {
             id
@@ -196,18 +188,18 @@ export default function Room({ route, navigation }) {
     }
   };
   const [subscribed, setSubscribed] = useState(false)
-  useEffect(() => {
-    if (data?.seeRoom && !subscribed) {
-      subscribeToMore({
-        document: ROOM_UPDATES,
-        variables: {
-          id: route?.params?.id,
-        },
-        updateQuery,
-      });
-      setSubscribed(true)
-    }
-  }, [data, subscribed]);
+    useEffect(() => {
+      if (data?.seeRoom && !subscribed) {
+        subscribeToMore({
+          document: ROOM_UPDATES,
+          variables: {
+            id: route?.params?.id,
+          },
+          updateQuery,
+        });
+        setSubscribed(true)
+      } 
+    }, [data, subscribed]);
   const onValid = ({ message }) => {
     if (!sendingMessage) {
       sendMessageMutation({
@@ -238,7 +230,6 @@ export default function Room({ route, navigation }) {
   );
   const messages = [...(data?.seeRoom?.messages ?? [])];
   messages.reverse();
-
   
   return (
     <KeyboardAvoidingView

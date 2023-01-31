@@ -1,12 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, View } from "react-native";
 import styled from "styled-components/native";
 import RoomItem from "../components/rooms/RoomItem";
 import ScreenLayout from "../components/ScreenLayout";
 import { ROOM_FRAGMENT } from "../fragments";
 import useMe from "../hooks/useMe";
-
 
 const SEE_ROOMS_QUERY = gql`
   query seeRooms {
@@ -17,17 +16,9 @@ const SEE_ROOMS_QUERY = gql`
   ${ROOM_FRAGMENT}
 `;
 
-
-const RoomText = styled.Text`
-  color: white;
-`;
-
-
 export default function Rooms() {
-    
   const { data, loading } = useQuery(SEE_ROOMS_QUERY);
   const renderItem = ({ item: room }) => <RoomItem {...room} />;
-
   return (
     <ScreenLayout loading={loading}>
       <FlatList
